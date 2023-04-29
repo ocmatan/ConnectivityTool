@@ -1,0 +1,56 @@
+[
+  {
+    "resource":"www.nyse.com",
+    "protocol":"http",
+    "test_type":"latency",
+    "latency_degradation_alert_threshold_ms": 50
+  },
+  {
+    "resource":"www.bbc.com",
+    "protocol":"https",
+    "test_type":"latency",
+    "latency_degradation_alert_threshold_ms": 34
+  },
+  {
+    "resource":"www.ebay.com",
+    "protocol":"dns",
+    "test_type":"lookup"
+  },
+  {
+    "resource":"www.dummy.gov.kr",
+    "protocol":"https",
+    "test_type":"latency"
+  },
+  {
+    "resource":"www.hello.td",
+    "protocol":"dns",
+    "test_type":"lookup"
+  },
+  {
+    "resource":"www.yahoo.com",
+    "protocol":"https",
+    "test_type":"latency"
+  }
+,
+  {
+    "resource":"twitter.com",
+    "protocol":"https",
+    "test_type":"Latency",
+    "latency_degradation_alert_threshold_ms": 10
+  },
+  {
+    "resource":"wikipedia.org",
+    "protocol":"http",
+    "test_type":"latency"
+  },
+  {
+    "resource":"bing.com",
+    "protocol":"DNS",
+    "test_type":"lookup"
+  },
+  {
+    "resource":"bing.co.uk",
+    "protocol":"DNS",
+    "test_type":"lookup"
+  }
+]

@@ -15,7 +15,7 @@ public class LatencyAlertHandler {
         try{
             if(p == null) loadLatencyStoreFromFile();//load store from file for the first time
             String encodedUrl = URLEncoder.encode(uri.toString(), StandardCharsets.UTF_8);
-            if(latencyDegradationAlertThresholdMS <= 0 && p.get(encodedUrl) != null) {
+            if(latencyDegradationAlertThresholdMS >= 0 && p.get(encodedUrl) != null) {
                 long previousLatency = Long.parseLong(p.getProperty(encodedUrl));
                 long latencyDegradationInMs = latencyInMillis - previousLatency;
                 if(latencyDegradationAlertThresholdMS <  latencyDegradationInMs ){

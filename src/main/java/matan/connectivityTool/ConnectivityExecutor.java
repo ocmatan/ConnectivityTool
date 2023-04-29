@@ -17,11 +17,13 @@ public class ConnectivityExecutor {
 
     private TaskFactory taskFactory;
     private String pathToConfig;
-    public static final HttpClient httpClient = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(10)).build();//TODO move duration to config ?
+
+    private ExecutorService taskExecutor;
+    public static final HttpClient httpClient = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(10)).build();//TODO: move duration to config ?
     public static final LatencyAlertHandler LatencyAlertHandler = new LatencyAlertHandler();
 
     public ConnectivityExecutor(String path){
-        ExecutorService executor = Executors.newFixedThreadPool(10);//TODO ?
+        taskExecutor = Executors.newFixedThreadPool(3);
         taskFactory = new TaskFactory();
         pathToConfig = path;
     }
@@ -35,12 +37,15 @@ public class ConnectivityExecutor {
                 while (reader.hasNext()) {
                     Map<String,String> inputRecord = new Gson().fromJson(reader, Map.class);
                     ConnectivityTask t = taskFactory.getTask(inputRecord.toString().toLowerCase());
-                    if(t != null) t.execute();//TODO use executor service
+                    if(t != null) t.execute();
+                    taskExecutor.execute(() -> t.execute());
                 }
                 reader.endArray();
 
             }catch (Exception e){
                 Main.logger.info("Failed to process config file: " + e.getMessage());
+            }finally {
+                taskExecutor.shutdownNow();
             }
 
         }
