@@ -32,8 +32,8 @@ public class ConnectivityExecutor {
             ) {
                 reader.beginArray();
                 while (reader.hasNext()) {
-                    Map<String,String> g = new Gson().fromJson(reader, Map.class);
-                    ConnectivityTask t = taskFactory.getTask(g.toString().toLowerCase());
+                    Map<String,String> inputRecord = new Gson().fromJson(reader, Map.class);
+                    ConnectivityTask t = taskFactory.getTask(inputRecord.toString().toLowerCase());
                     if(t != null) t.execute();//TODO use executor service
                 }
                 reader.endArray();
