@@ -32,18 +32,13 @@ public class HttpConnectivityAndLatencyTask implements ConnectivityTask{
                 } else {
                     long latencyInMillis = System.currentTimeMillis() - startTimeInMillis;
                     Main.logger.info("Successful " + this.protocol + " connection to: " + uri +", latency in ms: " + latencyInMillis);
-                    alertLatencyIfNeeded(latencyInMillis);
+                    ConnectivityExecutor.LatencyAlertHandler.handleLatency(uri, latencyInMillis);
                 }
             });
 
         }catch (Exception e){
             Main.logger.info("Failed to check connectivity to : " + protocol + "://" + resource );
         }
-
-
-    }
-
-    private void alertLatencyIfNeeded(long latencyInMillis){
 
     }
 

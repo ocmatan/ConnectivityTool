@@ -18,6 +18,7 @@ public class ConnectivityExecutor {
     private TaskFactory taskFactory;
     private String pathToConfig;
     public static final HttpClient httpClient = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(10)).build();//TODO move duration to config ?
+    public static final LatencyAlertHandler LatencyAlertHandler = new LatencyAlertHandler();
 
     public ConnectivityExecutor(String path){
         ExecutorService executor = Executors.newFixedThreadPool(10);//TODO ?
