@@ -15,11 +15,12 @@ the code was developed with Intellij community edition, so it's best to view it 
 or you can run ./gradlew jar to create an executable standalone jar 
 
 
-**Compromises i made to get the code ready on time:**
+**Compromises i have made to get the code ready on time:**
 1. latency store- i used a simple file to persist the latency between executions, a better solution should be provided 
     that doesn't require to load the entire store.
-2. performance optimization - async logging instead of synchronized
-3. performance optimization - http client thread pool control
+2. latency store- a better thread safe solution is need to provide faster access to the shared resource.
+3. performance optimization - async logging instead of synchronized
+4. performance optimization - http client thread pool control
 
 
 

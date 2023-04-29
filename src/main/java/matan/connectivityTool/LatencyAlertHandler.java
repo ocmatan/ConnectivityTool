@@ -5,14 +5,18 @@ import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class LatencyAlertHandler {
     private Properties p;
 
     private final String latencyStoreFilePath = "latencyStoreFile.properties";
+    Lock lock = new ReentrantLock();
 
     public void handleLatency(URI uri, long latencyInMillis, long latencyDegradationAlertThresholdMS){
         try{
+            lock.lock();
             if(p == null) loadLatencyStoreFromFile();//load store from file for the first time
             String encodedUrl = URLEncoder.encode(uri.toString(), StandardCharsets.UTF_8);
             if(latencyDegradationAlertThresholdMS >= 0 && p.get(encodedUrl) != null) {
@@ -25,6 +29,8 @@ public class LatencyAlertHandler {
             saveLatencyInStore(encodedUrl, latencyInMillis);
         }catch (Exception e){
             Main.logger.info("Failed to handle latency alert");
+        }finally {
+            lock.unlock();
         }
 
 
