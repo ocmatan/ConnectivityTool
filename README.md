@@ -1,6 +1,6 @@
 # Connectivity Tool
 
-**How to tun the tool ?**
+**How to run the tool ?**
 1. you'll need java jre installed on the host machine
 2. create configuration file, you can see examples for configuration in _src/main/resources_ or in the example files under the root folder
 3. change dir to ConnectivityTool
