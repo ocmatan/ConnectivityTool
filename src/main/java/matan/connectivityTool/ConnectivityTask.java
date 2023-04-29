@@ -1,4 +1,4 @@
-package org.example;
+package matan.connectivityTool;
 
 public interface ConnectivityTask {
 

@@ -1,4 +1,4 @@
-package org.example;
+package matan.connectivityTool;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -8,17 +8,19 @@ import java.io.InputStreamReader;
 import java.net.http.HttpClient;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ConnectivityExecutor {
 
-    TaskFactory taskFactory;
-    String pathToConfig;
+    private TaskFactory taskFactory;
+    private String pathToConfig;
+    public static final HttpClient httpClient = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(10)).build();//TODO move duration to config ?
 
     public ConnectivityExecutor(String path){
-        HttpClient httpClient = HttpClient.newBuilder().build();
-        ExecutorService executor = Executors.newFixedThreadPool(10);
+        ExecutorService executor = Executors.newFixedThreadPool(10);//TODO ?
         taskFactory = new TaskFactory();
         pathToConfig = path;
     }
@@ -30,14 +32,14 @@ public class ConnectivityExecutor {
             ) {
                 reader.beginArray();
                 while (reader.hasNext()) {
-                    Object g = new Gson().fromJson(reader, Object.class);
-                    ConnectivityTask t = taskFactory.getTask(g.toString());
-                    t.execute();
+                    Map<String,String> g = new Gson().fromJson(reader, Map.class);
+                    ConnectivityTask t = taskFactory.getTask(g.toString().toLowerCase());
+                    if(t != null) t.execute();//TODO use executor service
                 }
                 reader.endArray();
 
             }catch (Exception e){
-                System.out.println("Failed to process config file: " + e.getMessage());
+                Main.logger.info("Failed to process config file: " + e.getMessage());
             }
 
         }
