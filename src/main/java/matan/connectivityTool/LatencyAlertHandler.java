@@ -10,20 +10,15 @@ public class LatencyAlertHandler {
     private Properties p;
 
     private final String latencyStoreFilePath = "latencyStoreFile.properties";
-    public int LatencyAlertThresholdMillis = 5;//TODO move to config
 
-    public void handleLatency(URI uri, long latencyInMillis){
+    public void handleLatency(URI uri, long latencyInMillis, long latencyDegradationAlertThresholdMS){
         try{
-            if(p == null) loadLatencyStoreFromFile();
-
+            if(p == null) loadLatencyStoreFromFile();//load store from file for the first time
             String encodedUrl = URLEncoder.encode(uri.toString(), StandardCharsets.UTF_8);
-
-
-            //handle alert
-            if(p.get(encodedUrl) != null) {
+            if(latencyDegradationAlertThresholdMS <= 0 && p.get(encodedUrl) != null) {
                 long previousLatency = Long.parseLong(p.getProperty(encodedUrl));
                 long latencyDegradationInMs = latencyInMillis - previousLatency;
-                if( LatencyAlertThresholdMillis <  latencyDegradationInMs ){
+                if(latencyDegradationAlertThresholdMS <  latencyDegradationInMs ){
                     Main.logger.info("Alert for latency degradation, uri: " + uri + " degradation of " + latencyDegradationInMs + " ms since last execution");
                 }
             }

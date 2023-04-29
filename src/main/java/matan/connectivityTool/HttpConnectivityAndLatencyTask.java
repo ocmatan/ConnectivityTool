@@ -11,12 +11,7 @@ public class HttpConnectivityAndLatencyTask implements ConnectivityTask{
     public String resource;
     public String protocol;
     public String test_type;
-
-    public HttpConnectivityAndLatencyTask(String resource, String protocol, String test_type) {
-        this.resource = resource;
-        this.protocol = protocol;
-        this.test_type = test_type;
-    }
+    public long latency_degradation_alert_threshold_ms;
 
     @Override
     public void execute() {
@@ -32,7 +27,7 @@ public class HttpConnectivityAndLatencyTask implements ConnectivityTask{
                 } else {
                     long latencyInMillis = System.currentTimeMillis() - startTimeInMillis;
                     Main.logger.info("Successful " + this.protocol + " connection to: " + uri +", latency in ms: " + latencyInMillis);
-                    ConnectivityExecutor.LatencyAlertHandler.handleLatency(uri, latencyInMillis);
+                    ConnectivityExecutor.LatencyAlertHandler.handleLatency(uri, latencyInMillis, this.latency_degradation_alert_threshold_ms);
                 }
             });
 

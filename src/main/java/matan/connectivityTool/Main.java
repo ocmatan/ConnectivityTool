@@ -7,14 +7,14 @@ public class Main {
 
     public static Logger logger = LogManager.getLogger("logger");
     public static void main(String[] args) {
-        System.out.println("Connectivity Tool");
         if (args.length == 0) {
             logger.info("Usage: missing config file path");
             System.exit(0);
         }
         try {
-            logger.info("Program's configuration file argument is: " + args[0]);
+            logger.info("Initiating Connectivity Tool with configuration file: " + args[0]);
             new ConnectivityExecutor(args[0]).execute();
+            logger.info("Connectivity Tool completed");
         }catch (Exception e) {
             logger.info("Failed to execute program: " + e.getMessage());
         }
