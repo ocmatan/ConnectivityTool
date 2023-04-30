@@ -1,0 +1,15 @@
+http%3A%2F%2Fbing.com=5
+https%3A%2F%2Fwww.nyse.com=75
+http%3A%2F%2Fwww.nyse.com=118
+http%3A%2F%2Fwikipedia.org=88
+https%3A%2F%2Fwww.yahoo.com=1094
+https%3A%2F%2Fbing.com=88
+https%3A%2F%2Fwww.ebay.com=230
+https%3A%2F%2Ftwitter.com=1826
+https%3A%2F%2Fwww.bbc.com=1572
+https%3A%2F%2Fwikipedia.org=433
+http%3A%2F%2Ftwitter.com=1182
+http%3A%2F%2Fwww.bbc.com=160
+http%3A%2F%2Fwww.ebay.com=111
+https%3A%2F%2Fwww.yahoo.co.uk=294
+http%3A%2F%2Fwww.yahoo.com=676
