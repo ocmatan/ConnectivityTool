@@ -52,5 +52,10 @@
     "resource":"bing.co.uk",
     "protocol":"DNS",
     "test_type":"lookup"
+  },
+  {
+    "resource":"www.yahoo.co.uk",
+    "protocol":"https",
+    "test_type":"latency"
   }
 ]

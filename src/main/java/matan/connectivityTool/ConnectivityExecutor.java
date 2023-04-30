@@ -23,7 +23,7 @@ public class ConnectivityExecutor {
     public static final LatencyAlertHandler LatencyAlertHandler = new LatencyAlertHandler();
 
     public ConnectivityExecutor(String path){
-        taskExecutor = Executors.newFixedThreadPool(3);
+        taskExecutor = Executors.newFixedThreadPool(10);//TODO: move thread pool size to config ?
         taskFactory = new TaskFactory();
         pathToConfig = path;
     }
@@ -37,7 +37,6 @@ public class ConnectivityExecutor {
                 while (reader.hasNext()) {
                     Map<String,String> inputRecord = new Gson().fromJson(reader, Map.class);
                     ConnectivityTask t = taskFactory.getTask(inputRecord.toString().toLowerCase());
-                    if(t != null) t.execute();
                     taskExecutor.execute(() -> t.execute());
                 }
                 reader.endArray();
@@ -45,7 +44,7 @@ public class ConnectivityExecutor {
             }catch (Exception e){
                 Main.logger.info("Failed to process config file: " + e.getMessage());
             }finally {
-                taskExecutor.shutdownNow();
+                taskExecutor.shutdown();
             }
 
         }
